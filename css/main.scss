@@ -1,4 +1,109 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
+// Variables
+$font-stack: 'Poppins', sans-serif;
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semi-bold: 600;
+$font-bold: 700;
+$primary-color: rgb(24, 20, 36);
+
+
+// Mixins
+@mixin unselectable {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
+
+
+// Global
+body {
+    font-family: $font-stack;
+    font-weight: $font-regular;
+    color: $primary-color;
+    position: relative;
+}
+
+
+//Nav
+nav {
+    width: 100%;
+    height: 100px;
+    padding: 20px 64px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#roam-logo {
+    width: 105px;
+    padding: 20px 0;
+    float: left;
+}
+
+#hamburger {
+    padding: 20px 0;
+    float: right;
+    width: 28px;
+}
+
+
+//Hero
+.hero {
+    height: 100vh;
+    width: 100%;
+    background: fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: $font-bold;
+    font-size: 100px;
+    text-align: center;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+#team-illustration {
+    width: 100%;
+    @include unselectable;
+}
+
+.background-triangle {
+    width: 25%;
+    min-width: 300px;
+    position: absolute;
+    @include unselectable;
+}
+
+#triangle-1 {
+    top: 0;
+    right: 0;
+}
+
+#triangle-2 {
+    bottom: 0;
+    left: 0;
+    transform: rotate(180deg);
+}
+
+//Media Queries
+@media only screen and (max-width: 690px) {
+    .hero {
+      font-size: 80px;
+    }
+    .background-triangle {
+        min-width: 100px;
+    }
+  }
