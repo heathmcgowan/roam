@@ -32,11 +32,11 @@ function loadHero() {
         $('.scroll-heading').removeClass('hidden-opacity');
         $('.scroll-hero').append('<svg width="50px" height="60px" version="1.1" id="scroll-animation"><path fill="transparent" stroke="#171324" stroke-width="4" d="M 50 0 L 50 300" class="path"></path></svg>');
     }, 2200);
-};
+}
 
 // Load designers data
 $.getJSON('js/designers.json', function(data) {
-    for (i = 0; i < data.designer.length; i++) {  // TODO: change to handlebars
+    for (let i = 0; i < data.designer.length; i++) {  // TODO: change to handlebars
         $('main').append(`<div class="designer-card dc${i}"><div class="designer-card-top"><div class="designer-details"><h3>${data.designer[i].name}</h3><h4>${data.designer[i].title}</h4><p>${data.designer[i].bio}</p><button class="projects-button pointer" data-index="${i}">View Projects</button></div><div class="designer-image"><img src="${data.designer[i].image}" alt="${data.designer[i].name}'s Profile Photo"></div></div><div class="designer-card-bottom projects-closed dcb${i}"><ul class="projects projects${i}"></ul></div></div>`);
     }
     $('.projects-button').click(function(){
@@ -87,7 +87,7 @@ $(window).scroll(function () {
         $('.scroll-hero').removeClass('hidden-opacity');
     }
     // TODO: Update loop with array details
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         if ($(this).scrollTop() > ((headerHeight / 2) + triggerHeight * i)) {
             $(`.dc${i}`).addClass('on-screen');
         } else {
@@ -111,7 +111,6 @@ function loadProjects(i, behanceUser) {
         // Ajax request complete
         success: function(res) {
     
-            console.log(res);
     
             // Remove preloader
             setTimeout(function() {
