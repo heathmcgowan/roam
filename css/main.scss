@@ -207,24 +207,49 @@ main {
 
 .designer-card-bottom {
     width: 100%;
+    min-height: 500px;
     transition: 0.5s ease all;
 }
 
 .projects-closed {
-    height: 0;
+    min-height: 0;
 }
 
 .projects {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
     li {
-        width: 200px;
-        height: 300px;
-        margin: 20px;
+        width: 220px;
+        height: 220px;
+        margin: 12px 2%;
+        overflow-y: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
         img {
             width: 100%;
+            transition: 0.05s ease transform;
         }
+    }
+    li:hover {
+        cursor: pointer;
+        img {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.pre-loader {
+    position: absolute;
+    top: 55%;
+    object {
+        height: 100px;
     }
 }
 
@@ -244,9 +269,11 @@ main {
         font-weight: $font-regular;
     }
     p {
-        font-size: 20px;
-        padding: 30px 80px;
         text-align: center;
+        font-size: 18px;
+        line-height: 1.2;
+        font-weight: $font-light;
+        padding: 30px 80px;
     }
     button { // TODO: button hover color as per Roam style
         padding: 5px 8px;
@@ -269,17 +296,6 @@ footer {
     background-color: $primary-color;
 }
 
-// Media Queries
-@media only screen and (max-width: 690px) {
-    .hero {
-        font-size: 80px;
-    }
-
-    .background-triangle {
-        min-width: 100px;
-    }
-}
-
 // Loader
 .loader {
     position: fixed;
@@ -293,6 +309,81 @@ footer {
     transition: 0.75s ease opacity;
     object {
         height: 120px;
+    }
+}
+
+// Media Queries
+@media only screen and (min-width: 1432px) and (max-width: 1795px) {
+    .projects {
+        li:nth-child(11) {
+            display: none;
+        }
+        li:nth-child(12) {
+            display: none;
+        }
+    }
+}
+@media only screen and (min-width: 1058px) and (max-width: 1240px) {
+    .projects {
+        li:nth-child(11) {
+            display: none;
+        }
+        li:nth-child(12) {
+            display: none;
+        }
+    }
+}
+@media only screen and (max-width: 1240px) {
+    .designer-details {
+        h3 {
+            font-size: 50px;
+        }
+        h4 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 14px;
+            padding: 20px 30px;
+        }
+        button { // TODO: button hover color as per Roam style
+            font-size: 20px;
+        }
+    }
+    .designer-image {
+        img {
+            width: 200px;
+        }
+    }
+    .projects {
+        li {
+            width: 180px;
+            height: 180px;
+            margin: 10px 1%;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 690px) {
+    .hero {
+        font-size: 80px;
+    }
+
+    .background-triangle {
+        min-width: 100px;
+    }
+    .designer-card-top {
+        flex-direction: column;
+    }
+    .designer-image {
+        order: -1;
     }
 }
 

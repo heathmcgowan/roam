@@ -3,17 +3,20 @@ let headerHeight = $('header').height();
 let designerCardHeight = $('.designer-card').height();
 let triggerHeight = designerCardHeight + 75;
 const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV';
-const behanceUser = 'TRUFCREATIVE';
+
 
 // Loader
 $(document).ready(function () {
+    $(document).ready(function(){
+        $(this).scrollTop(0);
+    });
     setTimeout(function() {
         $('.loader').addClass('hidden-opacity');
-    }, 15); // TODO: Change back to 1500
+    }, 1500); // TODO: Change back to 1500
     setTimeout(function() {
         $('.loader').addClass('hidden');
         loadHero();
-    }, 20); // TODO: Change back to 2000
+    }, 2000); // TODO: Change back to 2000
 });
 
 // Load hero content
@@ -39,11 +42,13 @@ $.getJSON('js/designers.json', function(data) {
     $('.projects-button').click(function(){
         $('.projects').empty();
         let clickedDesigner = this.dataset.index;
-        $('.dcb' + clickedDesigner).toggleClass('projects-closed');
-        $('.dc' + clickedDesigner).toggleClass('designer-card-full');
+        let behanceUser = data.designer[clickedDesigner].userID; 
+        $(`.dcb${clickedDesigner}`).toggleClass('projects-closed');
+        $(`.dc${clickedDesigner}`).toggleClass('designer-card-full');
+        document.querySelector(`.dc${clickedDesigner}`).scrollIntoView();
         if (this.firstChild.nodeValue === "View Projects") {
             this.firstChild.nodeValue = "Close Projects";
-            loadProjects(clickedDesigner);
+            loadProjects(clickedDesigner, behanceUser);
         } else {
             this.firstChild.nodeValue = "View Projects";
         }
@@ -84,23 +89,23 @@ $(window).scroll(function () {
     // TODO: Update loop with array details
     for (i = 0; i < 4; i++) {
         if ($(this).scrollTop() > ((headerHeight / 2) + triggerHeight * i)) {
-            $('.dc' + i).addClass('on-screen');
+            $(`.dc${i}`).addClass('on-screen');
         } else {
-            $('.dc' + i).removeClass('on-screen')
+            $(`.dc${i}`).removeClass('on-screen')
         }
     }
 });
 
 //Behance API
-function loadProjects(i) {
-    let urlProjects = "https://api.behance.net/v2/users/" + behanceUser + "/projects?client_id=" + behanceKey + "&per_page=12";
+function loadProjects(i, behanceUser) {
+    let urlProjects = `https://api.behance.net/v2/users/${behanceUser}/projects?client_id=${behanceKey}&per_page=12`;
     $.ajax({
         url: urlProjects,
         dataType: 'jsonp',
     
         // Ajax request loading
         beforeSend: function(res) {
-                                $('<div class="pre-loader">loading</div>').prependTo('.dcb' + i);
+                                $('<div class="pre-loader"><object type="image/svg+xml" data="img/loader.svg"></object></div>').prependTo(`ul.projects${i}`);
         },
     
         // Ajax request complete
@@ -109,18 +114,22 @@ function loadProjects(i) {
             console.log(res);
     
             // Remove preloader
-            $('.pre-loader').detach();
-            $('.projects').empty();
-    
-            var projects = res.projects;
+            setTimeout(function() {
+                $('.pre-loader').detach();
+                $('.projects').empty();
+                var projects = res.projects;
         
-            if (res.projects.length > 0) {
-                projects.forEach(function(project) {
-                    $('<li><div class="image-container"><img src="' + project.covers.original + '"></div></li>').appendTo('ul.projects' + i);
-                });
-            } else {
-                $('<div class="no-results"><p>No matching projects.<br>Please adjust your search filters and try again.</p>').prependTo('.projects');
-            }
+                if (res.projects.length > 0) {
+                    projects.forEach(function(project) {
+                        $(`<li><div class="image-container"><img class="project-thumbnail" src="${project.covers.original}"></div></li>`).appendTo(`ul.projects${i}`);
+                    });
+                } else {
+                    $('<div class="no-results"><p>No matching projects.<br>Please adjust your search filters and try again.</p>').prependTo('.projects');
+                }
+            }, 1200);
+            
+    
+            
             
         },
     
