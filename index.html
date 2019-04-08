@@ -12,26 +12,31 @@
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 </head>
-
 <body>
+    <div class="loader">
+        <object type="image/svg+xml" data="img/loader.svg"></object>
+    </div>
     <header>
         <nav>
             <a href="https://weareroam.com/"><img id="roam-logo" src="img/roam-logo.svg" alt="Roam Logo" /></a>
             <img id="hamburger" src="img/hamburger.svg" alt="Hamburger Menu" />
         </nav>
         <div class="hero">
-            <img id="triangle-1" class="background-triangle" src="img/background-triangle.svg" alt="Background Shape" />
-            <img id="triangle-2" class="background-triangle" src="img/background-triangle.svg" alt="Background Shape" />
+            <img id="triangle-1" class="background-triangle hidden-opacity" src="img/background-triangle.svg" alt="Background Shape" />
+            <img id="triangle-2" class="background-triangle hidden-opacity" src="img/background-triangle.svg" alt="Background Shape" />
             <div class="hero-content">
-                <h1>Meet The Designers</h1>
-                <img id="team-illustration" src="img/team-illustration.svg" alt="Team Illustration" />
+                <h1 class="hero-heading hero-heading-hidden">Meet The Designers</h1>
             </div>
         </div>
+        <a href="#main">
+            <div class="scroll-hero">
+                <h5 class="scroll-heading hidden-opacity">scroll</h5>
+            </div>
+        </a>
     </header>
     <main id="main" class="dark-background">
     </main>
     <footer>
-
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>

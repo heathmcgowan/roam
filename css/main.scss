@@ -6,7 +6,7 @@ $font-regular: 400;
 $font-medium: 500;
 $font-semi-bold: 600;
 $font-bold: 700;
-$primary-color: rgb(24, 20, 36);
+$primary-color: rgb(23, 19, 36);
 
 
 // Mixins
@@ -79,6 +79,15 @@ nav {
     align-content: center;
 }
 
+.hero-heading {
+    color: rgba(23, 19, 36, 1);
+    transition: 1.5s ease color;
+}
+
+.hero-heading-hidden {
+    color: rgba(23, 19, 36, 0);
+}
+
 #team-illustration {
     width: 100%;
     @include unselectable;
@@ -103,6 +112,46 @@ nav {
     transform: rotate(180deg);
 }
 
+.scroll-hero {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.75s ease opacity;
+}
+
+.scroll-heading {
+    display: block;
+    margin: auto;
+    padding-bottom: 2px;
+    opacity: 1;
+    color: $primary-color;
+    text-decoration: none;
+    text-align: center;
+    transition: 2s ease opacity;
+}
+
+#scroll-animation {
+    display: block;
+    transform: translateX(-50%);
+
+    .path {
+      stroke-dasharray: 320;
+      stroke-dashoffset: 0;
+      animation: dash 3s ease;
+    }
+    
+    @keyframes dash {
+      from {
+        stroke-dashoffset: 320;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  }
+  
+
 
 // Main
 main {
@@ -119,16 +168,15 @@ main {
 .designer-card {
     float: left;
     width: 70%;
-    min-height: 200px;
     margin: 50px 0;
     padding: 20px;
     background-color: $primary-color;
     color: #fff;
-    transition: 0.75s ease transform;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    transition: 0.75s ease all;
+}
+
+.designer-card-full {
+    width: 100%;
 }
 
 .designer-card:nth-child(odd) {
@@ -147,6 +195,37 @@ main {
 
 .on-screen:nth-child(even) {
     transform: translateX(0);
+}
+
+.designer-card-top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.designer-card-bottom {
+    width: 100%;
+    transition: 0.5s ease all;
+}
+
+.projects-closed {
+    height: 0;
+}
+
+.projects {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    li {
+        width: 200px;
+        height: 300px;
+        margin: 20px;
+        img {
+            width: 100%;
+        }
+    }
 }
 
 .designer-details {
@@ -184,7 +263,6 @@ main {
     }
 }
 
-
 //Footer
 footer {
     height: 500px;
@@ -202,7 +280,27 @@ footer {
     }
 }
 
+// Loader
+.loader {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+    background-color: $primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.75s ease opacity;
+    object {
+        height: 120px;
+    }
+}
+
 // Modifiers
+.hidden {
+    display: none;
+}
+
 .hidden-opacity {
     opacity: 0;
 }
