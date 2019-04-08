@@ -1,8 +1,14 @@
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
-  color: #181424;
-  position: relative; }
+  color: #181424; }
+
+html {
+  scroll-behavior: smooth; }
+
+header {
+  height: 100vh;
+  width: 100%; }
 
 nav {
   width: 100%;
@@ -26,10 +32,7 @@ nav {
 .hero {
   height: 100vh;
   width: 100%;
-  background: fff;
-  position: absolute;
-  top: 0;
-  left: 0;
+  background: #fff;
   font-weight: 700;
   font-size: 100px;
   text-align: center; }
@@ -56,6 +59,7 @@ nav {
   width: 25%;
   min-width: 300px;
   position: absolute;
+  transition: 0.75s ease opacity;
   user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -67,12 +71,88 @@ nav {
   right: 0; }
 
 #triangle-2 {
-  bottom: 0;
+  bottom: -0.3px;
   left: 0;
   transform: rotate(180deg); }
+
+main {
+  width: 100%;
+  transition: 0.75s ease all;
+  padding-top: 25px;
+  overflow: hidden; }
+
+.dark-background {
+  background-color: #181424; }
+
+.designer-card {
+  float: left;
+  width: 70%;
+  min-height: 200px;
+  margin: 50px 0;
+  padding: 20px;
+  background-color: #181424;
+  color: #fff;
+  transition: 0.75s ease transform;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; }
+
+.designer-card:nth-child(odd) {
+  float: left;
+  transform: translateX(-100%); }
+
+.designer-card:nth-child(even) {
+  float: right;
+  transform: translateX(100%); }
+
+.on-screen:nth-child(odd) {
+  transform: translateX(0); }
+
+.on-screen:nth-child(even) {
+  transform: translateX(0); }
+
+.designer-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .designer-details h3 {
+    text-align: center;
+    font-size: 70px;
+    font-weight: 600; }
+  .designer-details h4 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 400; }
+  .designer-details p {
+    font-size: 20px;
+    padding: 30px 80px;
+    text-align: center; }
+  .designer-details button {
+    padding: 5px 8px;
+    color: #fff;
+    background-color: #181424;
+    border: 1.5px solid #fff;
+    font-size: 30px;
+    outline: none;
+    transition: 0.25s ease all; }
+  .designer-details button:hover {
+    color: #181424;
+    background-color: #fff; }
+
+footer {
+  height: 500px;
+  background-color: #181424; }
 
 @media only screen and (max-width: 690px) {
   .hero {
     font-size: 80px; }
   .background-triangle {
     min-width: 100px; } }
+
+.hidden-opacity {
+  opacity: 0; }
+
+.pointer {
+  cursor: pointer; }
