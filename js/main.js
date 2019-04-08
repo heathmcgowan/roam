@@ -104,12 +104,12 @@ function loadProjects(i, behanceUser) {
         dataType: 'jsonp',
     
         // Ajax request loading
-        beforeSend: function(res) {
+        beforeSend: function(res) { // eslint-disable-line
                                 $('<div class="pre-loader"><object type="image/svg+xml" data="img/loader.svg"></object></div>').prependTo(`ul.projects${i}`);
         },
     
         // Ajax request complete
-        success: function(res) {
+        success: function(res) { // eslint-disable-line
     
     
             // Remove preloader
@@ -133,7 +133,7 @@ function loadProjects(i, behanceUser) {
         },
     
         // if the ajax request fails do these things as a fallback
-        error: function(res) {
+        error: function(res) { // eslint-disable-line
             $('<h1> Error!! </h1>').appendTo('body');
         }
     
