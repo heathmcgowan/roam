@@ -31,10 +31,10 @@ boris = {
 }
 
 $(document).ready(function () {
-    $(document).scrollTop(0);
-    updateDesignerArray();
+    // updateDesignerArray(); // ! re-add this
     designer.push(boris);
-    checkArrayLoaded();
+    // checkArrayLoaded(); // ! re-add this
+    removeLoader(); // ! remove this
 });
 
 // Check Designer's details pulled from Behance correctly before removing loader
@@ -48,7 +48,7 @@ function checkArrayLoaded() {
 
 // Remove loader
 function removeLoader() {
-    console.log('done');
+    $(window).scrollTop(0);
     setTimeout(function() {
         $('.loader').addClass('hidden-opacity');
     }, 1500); // TODO: Change back to 1500
@@ -128,23 +128,23 @@ $(window).scroll(function () {
     }
 });
 
-// Behance API - Get Designers' Details
-function updateDesignerArray() {
-    for (let i = 0; i < designer.length; i++) {
-        let urlProjects = `https://api.behance.net/v2/users/${designer[i].userID}?client_id=${behanceKey}`;
-        let currentUser = i;
-        $.ajax({
-            url: urlProjects,
-            dataType: 'jsonp',
-            success: function(res) { // eslint-disable-line
-                designer[currentUser].name = `${res.user.first_name} ${res.user.last_name}`;
-                designer[currentUser].image = res.user.images['276'];
-                designer[currentUser].title = res.user.occupation;
-                numberInArray ++;
-            }
-        });
-    }
-}
+// Behance API - Get Designers' Details // ! re-add this
+// function updateDesignerArray() {
+//     for (let i = 0; i < designer.length; i++) {
+//         let urlProjects = `https://api.behance.net/v2/users/${designer[i].userID}?client_id=${behanceKey}`;
+//         let currentUser = i;
+//         $.ajax({
+//             url: urlProjects,
+//             dataType: 'jsonp',
+//             success: function(res) { // eslint-disable-line
+//                 designer[currentUser].name = `${res.user.first_name} ${res.user.last_name}`;
+//                 designer[currentUser].image = res.user.images['276'];
+//                 designer[currentUser].title = res.user.occupation;
+//                 numberInArray ++;
+//             }
+//         });
+//     }
+// }
 
 
 // Behance API - List Designer's Projects
@@ -175,30 +175,3 @@ function loadProjects(i, behanceUser) {
         }
     }); // END ajax request
 }
-
-
-
-// Load designers data
-// $.getJSON('js/designers.json', function(data) {
-//     for (let i = 0; i < data.designer.length; i++) {  // TODO: change to handlebars
-//         $('main').append(`<div class="designer-card dc${i}"><div class="designer-card-top"><div class="designer-details"><h3>${data.designer[i].name}</h3><h4>${data.designer[i].title}</h4><p>${data.designer[i].bio}</p><button class="projects-button pointer" data-index="${i}">View Projects</button></div><div class="designer-image"><img src="${data.designer[i].image}" alt="${data.designer[i].name}'s Profile Photo"></div></div><div class="designer-card-bottom projects-closed dcb${i}"><ul class="projects projects${i}"></ul></div></div>`);
-//     }
-//     $('.projects-button').click(function(){
-//         $('.projects').empty();
-//         let clickedDesigner = this.dataset.index;
-//         let behanceUser = data.designer[clickedDesigner].userID; 
-//         $(`.dcb${clickedDesigner}`).toggleClass('projects-closed');
-//         $(`.dc${clickedDesigner}`).toggleClass('designer-card-full');
-//         document.querySelector(`.dc${clickedDesigner}`).scrollIntoView(); // ! FIXME: button functionality needs fixed
-//         if (this.firstChild.nodeValue === "View Projects") {
-//             this.firstChild.nodeValue = "Close Projects";
-//             loadProjects(clickedDesigner, behanceUser);
-//         } else {
-//             this.firstChild.nodeValue = "View Projects";
-//         }
-//     })
-//     headerHeight = $('header').height();
-//     designerCardHeight = $('.designer-card').height();
-//     triggerHeight = designerCardHeight + 75;
-// });
-
