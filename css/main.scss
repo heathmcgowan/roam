@@ -7,6 +7,7 @@ $font-medium: 500;
 $font-semi-bold: 600;
 $font-bold: 700;
 $primary-color: rgb(23, 19, 36);
+$secondary-color: rgb(255, 119, 86);
 
 
 // Mixins
@@ -197,6 +198,12 @@ main {
     transform: translateX(0);
 }
 
+.on-screen:nth-last-child(1) {
+    button {
+        display: none;
+    }
+}
+
 .designer-card-top {
     width: 100%;
     display: flex;
@@ -232,9 +239,10 @@ main {
         overflow: hidden;
         background-color: rgba(255, 255, 255, 0.1);
         border: 2px solid rgba(255, 255, 255, 0.3);
+        position: relative;
         img {
             width: 100%;
-            transition: 0.05s ease transform;
+            transition: 0.15s ease transform;
         }
     }
     li:hover {
@@ -243,6 +251,49 @@ main {
             transform: scale(1.1);
         }
     }
+}
+
+.thumbnail-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: 0.15s ease opacity;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.thumbnail-overlay:hover {
+    opacity: 1;
+}
+
+.thumbnail-title {
+    font-size: 16px;
+    width: 100%;
+    margin: 20px 3px 0 3px;
+    font-weight: $font-regular;
+    text-align: center;
+    align-self: flex-start;
+}
+
+.thumbnail-appreciations, .thumbnail-views {
+    font-size: 16px;
+    font-weight: $font-light;
+    margin-bottom: 20px;
+    align-self: flex-end;
+}
+
+.thumbnail-appreciations {
+    margin-left: 15px;
+}
+
+.thumbnail-views {
+    margin-right: 15px;
 }
 
 .pre-loader {
@@ -260,17 +311,18 @@ main {
     align-items: center;
     h3 {
         text-align: center;
-        font-size: 70px;
+        font-size: 60px;
         font-weight: $font-semi-bold;
     }
     h4 {
         text-align: center;
-        font-size: 34px;
+        margin-top: 5px;
+        font-size: 30px;
         font-weight: $font-regular;
     }
     p {
         text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1.2;
         font-weight: $font-light;
         padding: 30px 80px;
@@ -280,13 +332,19 @@ main {
         color: #fff;
         background-color: $primary-color;
         border: 1.5px solid #fff;
-        font-size: 30px;
+        font-size: 26px;
         outline: none;
         transition: 0.25s ease all;
     }
     button:hover {
         color: $primary-color;
         background-color: #fff;
+    }
+}
+
+.designer-image {
+    img {
+        width: 276px;
     }
 }
 
@@ -377,7 +435,7 @@ footer {
     }
 
     .background-triangle {
-        min-width: 100px;
+        min-width: 250px;
     }
     .designer-card-top {
         flex-direction: column;

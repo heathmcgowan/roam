@@ -148,6 +148,9 @@ main {
 .on-screen:nth-child(even) {
   transform: translateX(0); }
 
+.on-screen:nth-last-child(1) button {
+  display: none; }
+
 .designer-card-top {
   width: 100%;
   display: flex;
@@ -179,14 +182,52 @@ main {
     align-items: center;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3); }
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative; }
     .projects li img {
       width: 100%;
-      transition: 0.05s ease transform; }
+      transition: 0.15s ease transform; }
   .projects li:hover {
     cursor: pointer; }
     .projects li:hover img {
       transform: scale(1.1); }
+
+.thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: 0.15s ease opacity;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+
+.thumbnail-overlay:hover {
+  opacity: 1; }
+
+.thumbnail-title {
+  font-size: 16px;
+  width: 100%;
+  margin: 20px 3px 0 3px;
+  font-weight: 400;
+  text-align: center;
+  align-self: flex-start; }
+
+.thumbnail-appreciations, .thumbnail-views {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  align-self: flex-end; }
+
+.thumbnail-appreciations {
+  margin-left: 15px; }
+
+.thumbnail-views {
+  margin-right: 15px; }
 
 .pre-loader {
   position: absolute;
@@ -201,15 +242,16 @@ main {
   align-items: center; }
   .designer-details h3 {
     text-align: center;
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 600; }
   .designer-details h4 {
     text-align: center;
-    font-size: 34px;
+    margin-top: 5px;
+    font-size: 30px;
     font-weight: 400; }
   .designer-details p {
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.2;
     font-weight: 300;
     padding: 30px 80px; }
@@ -218,12 +260,15 @@ main {
     color: #fff;
     background-color: #171324;
     border: 1.5px solid #fff;
-    font-size: 30px;
+    font-size: 26px;
     outline: none;
     transition: 0.25s ease all; }
   .designer-details button:hover {
     color: #171324;
     background-color: #fff; }
+
+.designer-image img {
+  width: 276px; }
 
 footer {
   height: 500px;
@@ -282,7 +327,7 @@ footer {
   .hero {
     font-size: 80px; }
   .background-triangle {
-    min-width: 100px; }
+    min-width: 250px; }
   .designer-card-top {
     flex-direction: column; }
   .designer-image {
