@@ -3,8 +3,7 @@ var numberInArray = 1;
 let headerHeight = $('header').height();
 let designerCardHeight = $('.designer-card').height();
 let triggerHeight = designerCardHeight + 75;
-const behanceKey = 'SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH';
-// const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV';
+const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV'; // backup - SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH
 let designer = [
     {
         bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
@@ -25,7 +24,7 @@ let designer = [
 ]
 boris = {
     name: 'Boris',
-    image: '../img/boris.jpg',
+    image: 'img/boris.jpg',
     title: 'CEO',
     bio: "Boris is the fat cat in charge. He sleeps all day while his team does all the hard work. There's no pussyfooting around it, he expects only the best, so don't rub him the wrong way. Get everything purrfect and he'll think you're the cat's whiskers.",
     userID: 'nerokore'
