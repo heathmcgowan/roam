@@ -22,7 +22,7 @@ let designer = [
         userID: 'nerokore'
     }
 ]
-boris = {
+let boris = {
     name: 'Boris',
     image: 'img/boris.jpg',
     title: 'CEO',
@@ -38,7 +38,7 @@ $(document).ready(function () {
 });
 
 // Check Designer's details pulled from Behance correctly before removing loader
-function checkArrayLoaded() {
+function checkArrayLoaded() { // eslint-disable-line
     if (numberInArray < designer.length) {
         window.setTimeout(checkArrayLoaded, 100);
     } else if (numberInArray === designer.length) {
@@ -48,7 +48,9 @@ function checkArrayLoaded() {
 
 // Remove loader
 function removeLoader() {
-    $(window).scrollTop(0);
+    setTimeout(function() {
+        $(window).scrollTop(0);
+    }, 100);
     setTimeout(function() {
         $('.loader').addClass('hidden-opacity');
     }, 1500); // TODO: Change back to 1500
@@ -95,6 +97,10 @@ function loadDesigners() {
     })
     onResize();
 }
+
+// Open project on click
+
+
 
 // Recalculate heights on window resize
 function onResize() {
@@ -159,17 +165,59 @@ function loadProjects(i, behanceUser) {
         },
         // Ajax request complete
         success: function(res) { // eslint-disable-line
-            console.log(res);
+            console.log(res); // eslint-disable-line
             setTimeout(function() {
                 $('.pre-loader').detach();
                 $('.projects').empty();
-                var projects = res.projects;
+                let projects = res.projects;
                 if (res.projects.length > 0) {
                     projects.forEach(function(project) {
-                        $(`<li><div class="image-container"><img class="project-thumbnail" src="${project.covers['404']}"><div class="thumbnail-overlay"><h5 class="thumbnail-title">${project.name}</h5><h5 class="thumbnail-appreciations"><i class="fas fa-thumbs-up"></i> ${project.stats.appreciations}</h5><h5 class="thumbnail-views">${project.stats.views} <i class="fas fa-eye"></i></h5></div></div></li>`).appendTo(`ul.projects${i}`);
+                        $(`<li class="project-container" data-projectid="${project.id}"><div class="image-container"><img class="project-thumbnail" src="${project.covers['404']}"><div class="thumbnail-overlay"${project.id}"><h5 class="thumbnail-title">${project.name}</h5><h5 class="thumbnail-appreciations"><i class="fas fa-thumbs-up"></i> ${project.stats.appreciations}</h5><h5 class="thumbnail-views">${project.stats.views} <i class="fas fa-eye"></i></h5></div></div></li>`).appendTo(`ul.projects${i}`);
                     });
+                    $('.project-container').click(function(){
+                        let clickedProject = this.dataset.projectid;
+                        openModal(clickedProject);
+                    })
                 } else {
                     $('<div class="no-results"><p>No matching projects.<br>Please adjust your search filters and try again.</p>').prependTo('.projects');
+                }
+            }, 1200);  
+        }
+    }); // END ajax request
+}
+
+// Behance API - Open clicked project
+function openModal(clickedProject) {
+    $('.modal-top').empty();
+    $('.modal-middle').empty();
+    $('.modal-bottom').empty();
+    $('.project-modal').removeClass('modal-closed');
+    $('body').css('overflow', 'hidden');
+    fillModal(clickedProject);
+}
+
+function fillModal(clickedProject) {
+    let urlProjects = `http://www.behance.net/v2/projects/${clickedProject}?api_key=${behanceKey}`;
+    $.ajax({
+        url: urlProjects,
+        dataType: 'jsonp',
+        // Ajax request loading
+        beforeSend: function(res) { // eslint-disable-line
+            $('<div class="pre-loader"><object type="image/svg+xml" data="img/loader.svg"></object></div>').prependTo('.project-modal');
+        },
+        // Ajax request complete
+        success: function(res) { // eslint-disable-line
+            console.log(res); // eslint-disable-line
+            setTimeout(function() {
+                $('.pre-loader').detach();
+                let modules = res.project.modules;
+                let numberOfModules = modules.length;
+                for (let i = 0; i < numberOfModules; i++) {
+                    if (modules[i].sizes.max_1920 != undefined) {
+                        $(`<img src="${modules[i].sizes.max_1920}">`).appendTo('.modal-middle');
+                    } else if (modules[i].sizes.max_1240 != undefined) {
+                        $(`<img src="${modules[i].sizes.max_1240}">`).appendTo('.modal-middle');
+                    }
                 }
             }, 1200);  
         }

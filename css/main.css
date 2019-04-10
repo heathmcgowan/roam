@@ -134,18 +134,18 @@ main {
 .designer-card-full {
   width: 100%; }
 
-.designer-card:nth-child(odd) {
+.designer-card:nth-child(even) {
   float: left;
   transform: translateX(-100%); }
 
-.designer-card:nth-child(even) {
+.designer-card:nth-child(odd) {
   float: right;
   transform: translateX(100%); }
 
-.on-screen:nth-child(odd) {
+.on-screen:nth-child(even) {
   transform: translateX(0); }
 
-.on-screen:nth-child(even) {
+.on-screen:nth-child(odd) {
   transform: translateX(0); }
 
 .on-screen:nth-last-child(1) button {
@@ -204,7 +204,12 @@ main {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between; }
+  justify-content: space-between;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none; }
 
 .thumbnail-overlay:hover {
   opacity: 1; }
@@ -269,6 +274,29 @@ main {
 
 .designer-image img {
   width: 276px; }
+
+.project-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 9999;
+  background-color: #171324;
+  transition: 1s ease width;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto; }
+
+.modal-closed {
+  width: 0%; }
+
+.modal-middle img {
+  max-width: 1000px;
+  display: block;
+  margin: auto; }
 
 footer {
   height: 500px;
