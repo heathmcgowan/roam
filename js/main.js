@@ -6,45 +6,45 @@ let triggerHeight = designerCardHeight + 75;
 const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV'; // backup - SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH
 let designer = [
     {
+        name: 'Hamish Cooper',
+        title: 'Graphic Designer',
         bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
-        userID: 'CourtneyTyler'
+        image: 'img/designer04.jpg',
+        userID: 'hamishcooper'
+    },
+    {   
+        name: 'Lena Plaksina',
+        title: 'Web Designer',
+        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        image: 'img/designer01.jpg',
+        userID: 'LenaPlaksina'
     },
     {
-        bio: 'Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam?',
-        userID: 'otvazhniy'
+        name: 'Ata Hutchinson',
+        title: 'UX Designer',
+        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        image: 'img/designer02.jpg',
+        userID: 'tunatipangcf7d'
     },
     {
-        bio: 'Lorem ipsum dolor sit, amet consectetur adipisiasfa sfa sfcing elit. Accusamua sfa s illum suscipit dolore ma sfinima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
-        userID: 'fatihocak'
+        name: 'Hannah Jensen',
+        title: 'Interaction Designer',
+        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        image: 'img/designer03.jpg',
+        userID: 'hannahcoolcatjensen'
     },
-    {
-        bio: 'Accusamus illum suscipitas fa dolorasf asf minima consequatur ex qu asfasi, easfa s avenieta sf facere aut. Placeat minima asf asrerum debitis eaque neque mollitia quia facere laudantium numquam?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam?',
-        userID: 'nerokore'
+    {   
+        name: 'Boris',
+        title: 'CEO',
+        image: 'img/boris.jpg',
+        bio: "Boris is the fat cat in charge. He sleeps all day while his team does all the hard work. There's no pussyfooting around it, he expects only the best, so don't rub him the wrong way. Get everything purrfect and he'll think you're the cat's whiskers.",
+        userID: ''
     }
 ]
-let boris = {
-    name: 'Boris',
-    image: 'img/boris.jpg',
-    title: 'CEO',
-    bio: "Boris is the fat cat in charge. He sleeps all day while his team does all the hard work. There's no pussyfooting around it, he expects only the best, so don't rub him the wrong way. Get everything purrfect and he'll think you're the cat's whiskers.",
-    userID: 'nerokore'
-}
 
 $(document).ready(function () {
-    updateDesignerArray(); // ! re-add this
-    designer.push(boris);
-    checkArrayLoaded(); // ! re-add this
-    // removeLoader(); // ! remove this
+    removeLoader();
 });
-
-// Check Designer's details pulled from Behance correctly before removing loader
-function checkArrayLoaded() { // eslint-disable-line
-    if (numberInArray < designer.length) {
-        window.setTimeout(checkArrayLoaded, 100);
-    } else if (numberInArray === designer.length) {
-        removeLoader();
-    }
-}
 
 // Remove loader
 function removeLoader() {
@@ -82,17 +82,23 @@ function loadDesigners() {
         $('main').append(`<div class="designer-card dc${i}"><div class="designer-card-top"><div class="designer-details"><h3>${designer[i].name}</h3><h4>${designer[i].title}</h4><p>${designer[i].bio}</p><button class="projects-button pointer" data-index="${i}">View Projects</button></div><div class="designer-image"><img src="${designer[i].image}" alt="${designer[i].name}'s Profile Photo"></div></div><div class="designer-card-bottom projects-closed dcb${i}"><ul class="projects projects${i}"></ul></div></div>`);
     }
     $('.projects-button').click(function(){
-        $('.projects').empty();
         let clickedDesigner = this.dataset.index;
-        let behanceUser = designer[clickedDesigner].userID; 
-        $(`.dcb${clickedDesigner}`).toggleClass('projects-closed');
-        $(`.dc${clickedDesigner}`).toggleClass('designer-card-full');
-        document.querySelector(`.dc${clickedDesigner}`).scrollIntoView(); // ! FIXME: button functionality needs fixed
+        let behanceUser = designer[clickedDesigner].userID;
         if (this.firstChild.nodeValue === "View Projects") {
+            $('.projects-button').text('View Projects');
             this.firstChild.nodeValue = "Close Projects";
+            $('.projects').empty();
+            $('.designer-card-bottom').addClass('projects-closed');
+            $(`.dcb${clickedDesigner}`).removeClass('projects-closed');
+            $('.designer-card').removeClass('designer-card-full');
+            $(`.dc${clickedDesigner}`).addClass('designer-card-full');
+            document.querySelector(`.dc${clickedDesigner}`).scrollIntoView()
             loadProjects(clickedDesigner, behanceUser);
         } else {
             this.firstChild.nodeValue = "View Projects";
+            $('.projects').empty();
+            $('.designer-card-bottom').addClass('projects-closed');
+            $('.designer-card').removeClass('designer-card-full');
         }
     })
     onResize();
@@ -116,6 +122,7 @@ $(window).on('resize', function () {
 // Add/Remove classes on scroll
 $(window).scroll(function () {
     if ($(this).scrollTop() > headerHeight / 5) {
+        console.log('hello');
         $('#main').removeClass('dark-background');
         $('.background-triangle').addClass('hidden-opacity');
         $('.scroll-hero').addClass('hidden-opacity');
@@ -133,25 +140,6 @@ $(window).scroll(function () {
         }
     }
 });
-
-// Behance API - Get Designers' Details // ! re-add this
-function updateDesignerArray() {
-    for (let i = 0; i < designer.length; i++) {
-        let urlProjects = `https://api.behance.net/v2/users/${designer[i].userID}?client_id=${behanceKey}`;
-        let currentUser = i;
-        $.ajax({
-            url: urlProjects,
-            dataType: 'jsonp',
-            success: function(res) { // eslint-disable-line
-                designer[currentUser].name = `${res.user.first_name} ${res.user.last_name}`;
-                designer[currentUser].image = res.user.images['276'];
-                designer[currentUser].title = res.user.occupation;
-                numberInArray ++;
-            }
-        });
-    }
-}
-
 
 // Behance API - List Designer's Projects
 function loadProjects(i, behanceUser) {
@@ -274,6 +262,7 @@ function fillModal(clickedProject) {
             }
             // Remove pre-loader
             setTimeout(function() {
+                $('.modal-top').removeClass('hidden');
                 $('.modal-pre-loader').detach();
             }, 2200);
         }
