@@ -31,10 +31,10 @@ let boris = {
 }
 
 $(document).ready(function () {
-    // updateDesignerArray(); // ! re-add this
+    updateDesignerArray(); // ! re-add this
     designer.push(boris);
-    // checkArrayLoaded(); // ! re-add this
-    removeLoader(); // ! remove this
+    checkArrayLoaded(); // ! re-add this
+    // removeLoader(); // ! remove this
 });
 
 // Check Designer's details pulled from Behance correctly before removing loader
@@ -135,22 +135,22 @@ $(window).scroll(function () {
 });
 
 // Behance API - Get Designers' Details // ! re-add this
-// function updateDesignerArray() {
-//     for (let i = 0; i < designer.length; i++) {
-//         let urlProjects = `https://api.behance.net/v2/users/${designer[i].userID}?client_id=${behanceKey}`;
-//         let currentUser = i;
-//         $.ajax({
-//             url: urlProjects,
-//             dataType: 'jsonp',
-//             success: function(res) { // eslint-disable-line
-//                 designer[currentUser].name = `${res.user.first_name} ${res.user.last_name}`;
-//                 designer[currentUser].image = res.user.images['276'];
-//                 designer[currentUser].title = res.user.occupation;
-//                 numberInArray ++;
-//             }
-//         });
-//     }
-// }
+function updateDesignerArray() {
+    for (let i = 0; i < designer.length; i++) {
+        let urlProjects = `https://api.behance.net/v2/users/${designer[i].userID}?client_id=${behanceKey}`;
+        let currentUser = i;
+        $.ajax({
+            url: urlProjects,
+            dataType: 'jsonp',
+            success: function(res) { // eslint-disable-line
+                designer[currentUser].name = `${res.user.first_name} ${res.user.last_name}`;
+                designer[currentUser].image = res.user.images['276'];
+                designer[currentUser].title = res.user.occupation;
+                numberInArray ++;
+            }
+        });
+    }
+}
 
 
 // Behance API - List Designer's Projects
@@ -188,9 +188,14 @@ function loadProjects(i, behanceUser) {
 
 // Behance API - Open clicked project
 function openModal(clickedProject) {
-    $('.modal-top').empty();
-    $('.modal-middle').empty();
-    $('.modal-bottom').empty();
+    $('<button class="close-modal modal-button pointer"><i class="fas fa-chevron-left"></i> Back</button>').appendTo('.modal-top');
+    $('.close-modal').click(function() {
+        $('.modal-top').empty();
+        $('.modal-middle').empty();
+        $('.modal-bottom').empty();
+        $('.project-modal').addClass('modal-closed');
+        $('body').css('overflow', 'auto');
+    });
     $('.project-modal').removeClass('modal-closed');
     $('body').css('overflow', 'hidden');
     fillModal(clickedProject);
@@ -203,23 +208,76 @@ function fillModal(clickedProject) {
         dataType: 'jsonp',
         // Ajax request loading
         beforeSend: function(res) { // eslint-disable-line
-            $('<div class="pre-loader"><object type="image/svg+xml" data="img/loader.svg"></object></div>').prependTo('.project-modal');
+            $('<div class="modal-pre-loader"><object class="loader-svg" type="image/svg+xml" data="img/loader.svg"></object></div>').appendTo('.project-modal');
         },
         // Ajax request complete
         success: function(res) { // eslint-disable-line
             console.log(res); // eslint-disable-line
-            setTimeout(function() {
-                $('.pre-loader').detach();
-                let modules = res.project.modules;
-                let numberOfModules = modules.length;
-                for (let i = 0; i < numberOfModules; i++) {
-                    if (modules[i].sizes.max_1920 != undefined) {
-                        $(`<img src="${modules[i].sizes.max_1920}">`).appendTo('.modal-middle');
-                    } else if (modules[i].sizes.max_1240 != undefined) {
-                        $(`<img src="${modules[i].sizes.max_1240}">`).appendTo('.modal-middle');
+            let designer = res.project.owners[0];
+            let project = res.project;
+            let designerName = designer.display_name;
+            let designerImage = `${designer.images['276']}`;
+            let designerCity = designer.city;
+            let designerCountry = designer.country;
+            let designerFollowers = designer.stats.followers;
+            let designerFollowing = designer.stats.following;
+            let designerAppreciations = designer.stats.appreciations;
+            let designerViews = designer.stats.views;
+            let designerURL = designer.url;
+            let projectTitle = project.name;
+            let projectDescription = project.description;
+            let projectDate = project.published_on;
+            let projectViews = project.stats.views;
+            let projectAppreciations = project.stats.appreciations;
+            let projectTags = project.tags;
+            let projectURL = project.url;
+            let projectTools = project.tools;
+
+            // Fill top of modal with title, designer details, views, appreciations
+            $(`<a class="modal-button view-on-behance pointer" href="${projectURL}" target="_blank">View on Behance <i class="fas fa-external-link-alt"></i></a>`).appendTo('.modal-top');
+            $(`<h1 class="project-title">${projectTitle}</h1>`).appendTo('.modal-top');
+            $(`<div class="description"><h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5><p>${projectDescription}</p><h5 class="appreciations">${projectAppreciations} <i class="fas fa-thumbs-up"></i></h5></div>`).appendTo('.modal-top');
+            let modalTopHeight = $('.modal-top')[0].clientHeight;
+            $('.modal-middle').css('margin-top', modalTopHeight);
+            $('.project-modal').scroll(function () {
+                if ($(this).scrollTop() > 0) {
+                    $('.project-title').addClass('hidden');
+                    $('.description').addClass('hidden');
+                    $('.modal-middle').css('margin-top', modalTopHeight);
+                } else {
+                    $('.project-title').removeClass('hidden');
+                    $('.description').removeClass('hidden');
+                    $('.modal-middle').css('margin-top', modalTopHeight);
+                }
+                // TODO: Update loop with array details
+                for (let i = 0; i < designer.length; i++) {
+                    if ($(this).scrollTop() > ((headerHeight / 2) + triggerHeight * i)) {
+                        $(`.dc${i}`).addClass('on-screen');
+                    } else {
+                        $(`.dc${i}`).removeClass('on-screen')
                     }
                 }
-            }, 1200);  
+            });
+            // Fill middle of modal with project images and videos
+            let modules = res.project.modules;
+            let numberOfModules = modules.length;
+            for (let i = 0; i < numberOfModules; i++) {
+                if (modules[i].type === 'image' && modules[i].sizes.max_1920 != undefined) {
+                    $(`<img src="${modules[i].sizes.max_1920}">`).appendTo('.modal-middle');
+                } else if (modules[i].type === 'image' && modules[i].sizes.max_1240 != undefined) {
+                    $(`<img src="${modules[i].sizes.max_1240}">`).appendTo('.modal-middle');
+                } else if (modules[i].type === 'image' && modules[i].sizes.original != undefined) {
+                    $(`<img src="${modules[i].sizes.original}">`).appendTo('.modal-middle');
+                } else if (modules[i].type === 'embed') {
+                    $(`${modules[i].embed}`).appendTo('.modal-middle');
+                }
+            }
+            // Remove pre-loader
+            setTimeout(function() {
+                $('.modal-pre-loader').detach();
+            }, 2200);
         }
     }); // END ajax request
 }
+
+// openModal(78308555); // ! Remove this

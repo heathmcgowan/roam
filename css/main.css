@@ -279,24 +279,110 @@ main {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   z-index: 9999;
   background-color: #171324;
   transition: 1s ease width;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   overflow-y: auto; }
 
 .modal-closed {
   width: 0%; }
 
-.modal-middle img {
-  max-width: 1000px;
-  display: block;
-  margin: auto; }
+.modal-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #171324;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: #fff; }
+  .modal-top h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 35px;
+    font-weight: 500;
+    margin-bottom: 20px; }
+
+.description {
+  margin: auto;
+  width: 100%;
+  max-width: 1240px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 5px; }
+  .description p {
+    width: 70%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 20px; }
+  .description h5 {
+    width: 15%;
+    font-size: 30px;
+    padding: 0px 7px; }
+  .description .appreciations {
+    text-align: right;
+    margin-right: 20px; }
+
+.modal-button {
+  margin: 15px;
+  padding: 5px 8px;
+  color: #fff;
+  background-color: #171324;
+  border: 1.5px solid #fff;
+  font-size: 25px;
+  font-weight: 400;
+  outline: none;
+  transition: 0.25s ease all;
+  text-decoration: none; }
+
+.modal-button:hover {
+  color: #171324;
+  background-color: #fff; }
+
+.view-on-behance {
+  margin-right: 30px; }
+
+.modal-middle {
+  width: 100%;
+  background-color: #2f2c3a; }
+  .modal-middle img {
+    width: 100%;
+    max-width: 1240px;
+    display: block;
+    margin: auto; }
+  .modal-middle iframe {
+    display: block;
+    width: 100%;
+    max-width: 1240px;
+    min-height: 500px;
+    margin: auto; }
+
+.modal-bottom {
+  width: 100%;
+  min-height: 300px; }
+
+.modal-pre-loader {
+  background-color: #171324;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; }
+
+.loader-svg {
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
 
 footer {
   height: 500px;
@@ -350,6 +436,10 @@ footer {
     border: 2px solid rgba(255, 255, 255, 0.3); }
     .projects li img {
       width: 100%; } }
+
+@media only screen and (max-width: 930px) {
+  .description h5 {
+    font-size: 20px; } }
 
 @media only screen and (max-width: 690px) {
   .hero {

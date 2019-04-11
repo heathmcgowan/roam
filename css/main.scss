@@ -354,15 +354,11 @@ main {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     z-index: 9999;
     background-color: $primary-color;
     transition: 1s ease width;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     overflow-y: auto;
 }
 
@@ -370,12 +366,113 @@ main {
     width: 0%;
 }
 
+.modal-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $primary-color;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #fff;
+    h1 {
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        font-weight: $font-medium;
+        margin-bottom: 20px;
+    }
+}
+
+.description {
+    margin: auto;
+    width: 100%;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 5px;
+    p {
+        width: 70%;
+        text-align: center;
+        font-size: 16px;
+        font-weight: $font-light;
+        margin-bottom: 20px;
+    }
+    h5 {
+        width: 15%;
+        font-size: 30px;
+        padding: 0px 7px;
+    }
+    .appreciations {
+        text-align: right;
+        margin-right: 20px;
+    }
+}
+
+.modal-button { // TODO: button hover color as per Roam style
+    margin: 15px;
+    padding: 5px 8px;
+    color: #fff;
+    background-color: $primary-color;
+    border: 1.5px solid #fff;
+    font-size: 25px;
+    font-weight: $font-regular;
+    outline: none;
+    transition: 0.25s ease all;
+    text-decoration: none;
+}
+.modal-button:hover {
+    color: $primary-color;
+    background-color: #fff;
+}
+
+.view-on-behance {
+    margin-right: 30px;
+}
+
 .modal-middle {
+    width: 100%;
+    background-color: #2f2c3a;
     img {
-        max-width: 1000px;
+        width: 100%;
+        max-width: 1240px;
         display: block;
         margin: auto;
     }
+    iframe {
+        display: block;
+        width: 100%;
+        max-width: 1240px;
+        min-height: 500px;
+        margin: auto;
+    }
+}
+
+.modal-bottom {
+    width: 100%;
+    min-height: 300px;
+}
+
+.modal-pre-loader {
+    background-color: $primary-color;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.loader-svg {
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 // Footer
@@ -455,6 +552,14 @@ footer {
             img {
                 width: 100%;
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 930px) {
+    .description {
+        h5 {
+            font-size: 20px;
         }
     }
 }
