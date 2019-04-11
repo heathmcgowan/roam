@@ -202,7 +202,7 @@ function openModal(clickedProject) {
 }
 
 function fillModal(clickedProject) {
-    let urlProjects = `http://www.behance.net/v2/projects/${clickedProject}?api_key=${behanceKey}`;
+    let urlProjects = `https://www.behance.net/v2/projects/${clickedProject}?api_key=${behanceKey}`;
     $.ajax({
         url: urlProjects,
         dataType: 'jsonp',
