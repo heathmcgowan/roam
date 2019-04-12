@@ -122,7 +122,6 @@ $(window).on('resize', function () {
 // Add/Remove classes on scroll
 $(window).scroll(function () {
     if ($(this).scrollTop() > headerHeight / 5) {
-        console.log('hello');
         $('#main').removeClass('dark-background');
         $('.background-triangle').addClass('hidden-opacity');
         $('.scroll-hero').addClass('hidden-opacity');
@@ -180,7 +179,7 @@ function openModal(clickedProject) {
     $('.close-modal').click(function() {
         $('.modal-top').empty();
         $('.modal-middle').empty();
-        $('.modal-bottom').empty();
+        $('.comments-list').empty();
         $('.project-modal').addClass('modal-closed');
         $('body').css('overflow', 'auto');
     });
@@ -191,6 +190,7 @@ function openModal(clickedProject) {
 
 function fillModal(clickedProject) {
     let urlProjects = `https://www.behance.net/v2/projects/${clickedProject}?api_key=${behanceKey}`;
+    let urlProjectsComments = `https://api.behance.net/v2/projects/${clickedProject}/comments?client_id=${behanceKey}`
     $.ajax({
         url: urlProjects,
         dataType: 'jsonp',
@@ -259,7 +259,7 @@ function fillModal(clickedProject) {
                 } else if (modules[i].type === 'embed') {
                     $(`${modules[i].embed}`).appendTo('.modal-middle');
                 }
-            }
+            }            
             // Remove pre-loader
             setTimeout(function() {
                 $('.modal-top').removeClass('hidden');
@@ -267,6 +267,51 @@ function fillModal(clickedProject) {
             }, 2200);
         }
     }); // END ajax request
+
+    // Fill comments section
+    $.ajax({
+        url: urlProjectsComments,
+        dataType: 'jsonp',
+
+        // Ajax request complete
+        success: function(res) { // eslint-disable-line
+            console.log(res); // eslint-disable-line
+            let comment = res.comments;
+            comment.forEach(function(comment) {
+                let elapsedTime = convertTimestamp(comment.created_on);
+                $(`<div class="comment"><div class="comment-left"><img src="${comment.user.images['115']}" alt="${comment.user.display_name}'s profile image" /></div><div class="comment-right"><a class="comment-user" href="${comment.user.url}" target="_blank">${comment.user.display_name}</a><p class="comment-content">${comment.comment}</p><p class="comment-date">${elapsedTime}</p></div</div>`).appendTo('.comments-list');
+            });
+
+
+        }
+    }); // END ajax request
 }
 
-// openModal(78308555); // ! Remove this
+// Convert timestamp to elapsed time
+function convertTimestamp(timestamp) {
+    let timestampMS = timestamp * 1000;
+    var current = (new Date).getTime();
+    let msPerMinute = 60 * 1000;
+    let msPerHour = msPerMinute * 60;
+    let msPerDay = msPerHour * 24;
+    let msPerMonth = msPerDay * 30;
+    let msPerYear = msPerDay * 365;
+
+    let elapsed = current - timestampMS;
+
+    if (elapsed < msPerMinute) {
+         return Math.round(elapsed/1000) + ' seconds ago';   
+    } else if (elapsed < msPerHour) {
+         return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+    } else if (elapsed < msPerDay ) {
+         return Math.round(elapsed/msPerHour ) + ' hours ago';   
+    } else if (elapsed < msPerMonth) {
+        return Math.round(elapsed/msPerDay) + ' days ago';   
+    } else if (elapsed < msPerYear) {
+        return Math.round(elapsed/msPerMonth) + ' months ago';   
+    } else if (Math.round(elapsed/msPerYear) === 1) {
+        return Math.round(elapsed/msPerYear ) + ' year ago';   
+    } else {
+        return Math.round(elapsed/msPerYear ) + ' years ago';   
+    }
+}
