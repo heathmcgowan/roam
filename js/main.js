@@ -3,6 +3,7 @@ var numberInArray = 1;
 let headerHeight = $('header').height();
 let designerCardHeight = $('.designer-card').height();
 let triggerHeight = designerCardHeight + 75;
+let modalOpen = false;
 const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV'; // backup - SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH
 let designer = [
     {
@@ -104,10 +105,6 @@ function loadDesigners() {
     onResize();
 }
 
-// Open project on click
-
-
-
 // Recalculate heights on window resize
 function onResize() {
     headerHeight = $('header').height();
@@ -159,11 +156,23 @@ function loadProjects(i, behanceUser) {
                 let projects = res.projects;
                 if (res.projects.length > 0) {
                     projects.forEach(function(project) {
-                        $(`<li class="project-container" data-projectid="${project.id}"><div class="image-container"><img class="project-thumbnail" src="${project.covers['404']}"><div class="thumbnail-overlay"${project.id}"><h5 class="thumbnail-title">${project.name}</h5><h5 class="thumbnail-appreciations"><i class="fas fa-thumbs-up"></i> ${project.stats.appreciations}</h5><h5 class="thumbnail-views">${project.stats.views} <i class="fas fa-eye"></i></h5></div></div></li>`).appendTo(`ul.projects${i}`);
+                        $(` <li class="project-container" data-projectid="${project.id}">
+                                <div class="image-container">
+                                    <img class="project-thumbnail" src="${project.covers['404']}">
+                                    <div class="thumbnail-overlay"${project.id}">
+                                        <h5 class="thumbnail-title">${project.name}</h5>
+                                        <h5 class="thumbnail-appreciations"><i class="fas fa-thumbs-up"></i> ${project.stats.appreciations}</h5>
+                                        <h5 class="thumbnail-views">${project.stats.views} <i class="fas fa-eye"></i></h5>
+                                    </div>
+                                </div>
+                            </li>`).appendTo(`ul.projects${i}`);
                     });
                     $('.project-container').click(function(){
                         let clickedProject = this.dataset.projectid;
-                        openModal(clickedProject);
+                        if (modalOpen === false) {
+                            modalOpen = true;
+                            openModal(clickedProject);
+                        }
                     })
                 } else {
                     $('<div class="no-results"><p>No matching projects.<br>Please adjust your search filters and try again.</p>').prependTo('.projects');
@@ -177,14 +186,20 @@ function loadProjects(i, behanceUser) {
 function openModal(clickedProject) {
     $('<button class="close-modal modal-button pointer"><i class="fas fa-chevron-left"></i> Back</button>').appendTo('.modal-top');
     $('.close-modal').click(function() {
+        modalOpen = false;
         $('.modal-top').empty();
+        $('.modal-top').addClass('hidden');
         $('.modal-middle').empty();
+        $('.modal-bottom-container').addClass('hidden');
         $('.comments-list').empty();
         $('.project-modal').addClass('modal-closed');
         $('body').css('overflow', 'auto');
+        $('html').css('overflow', 'auto');
     });
     $('.project-modal').removeClass('modal-closed');
+    $('.modal-bottom-container').removeClass('hidden');
     $('body').css('overflow', 'hidden');
+    $('html').css('overflow', 'hidden');
     fillModal(clickedProject);
 }
 
@@ -224,28 +239,12 @@ function fillModal(clickedProject) {
             // Fill top of modal with title, designer details, views, appreciations
             $(`<a class="modal-button view-on-behance pointer" href="${projectURL}" target="_blank">View on Behance <i class="fas fa-external-link-alt"></i></a>`).appendTo('.modal-top');
             $(`<h1 class="project-title">${projectTitle}</h1>`).appendTo('.modal-top');
-            $(`<div class="description"><h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5><p>${projectDescription}</p><h5 class="appreciations">${projectAppreciations} <i class="fas fa-thumbs-up"></i></h5></div>`).appendTo('.modal-top');
-            let modalTopHeight = $('.modal-top')[0].clientHeight;
-            $('.modal-middle').css('margin-top', modalTopHeight);
-            $('.project-modal').scroll(function () {
-                if ($(this).scrollTop() > 0) {
-                    $('.project-title').addClass('hidden');
-                    $('.description').addClass('hidden');
-                    $('.modal-middle').css('margin-top', modalTopHeight);
-                } else {
-                    $('.project-title').removeClass('hidden');
-                    $('.description').removeClass('hidden');
-                    $('.modal-middle').css('margin-top', modalTopHeight);
-                }
-                // TODO: Update loop with array details
-                for (let i = 0; i < designer.length; i++) {
-                    if ($(this).scrollTop() > ((headerHeight / 2) + triggerHeight * i)) {
-                        $(`.dc${i}`).addClass('on-screen');
-                    } else {
-                        $(`.dc${i}`).removeClass('on-screen')
-                    }
-                }
-            });
+            $(` <div class="description">
+                    <h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5>
+                    <p>${projectDescription}</p>
+                    <h5 class="appreciations">${projectAppreciations} <i class="fas fa-thumbs-up"></i></h5>
+                </div>`).appendTo('.modal-top');
+
             // Fill middle of modal with project images and videos
             let modules = res.project.modules;
             let numberOfModules = modules.length;
@@ -277,12 +276,23 @@ function fillModal(clickedProject) {
         success: function(res) { // eslint-disable-line
             console.log(res); // eslint-disable-line
             let comment = res.comments;
-            comment.forEach(function(comment) {
-                let elapsedTime = convertTimestamp(comment.created_on);
-                $(`<div class="comment"><div class="comment-left"><img src="${comment.user.images['115']}" alt="${comment.user.display_name}'s profile image" /></div><div class="comment-right"><a class="comment-user" href="${comment.user.url}" target="_blank">${comment.user.display_name}</a><p class="comment-content">${comment.comment}</p><p class="comment-date">${elapsedTime}</p></div</div>`).appendTo('.comments-list');
-            });
-
-
+            if (comment.length > 0) {
+                comment.forEach(function(comment) {
+                    let elapsedTime = convertTimestamp(comment.created_on);
+                    $(` <div class="comment">
+                            <div class="comment-left">
+                                <img src="${comment.user.images['115']}" alt="${comment.user.display_name}'s profile image" />
+                            </div>
+                            <div class="comment-right">
+                                <a class="comment-user" href="${comment.user.url}" target="_blank">${comment.user.display_name}</a>
+                                <p class="comment-content">${comment.comment}</p>
+                                <p class="comment-date">${elapsedTime}</p>
+                            </div>
+                        </div>`).appendTo('.comments-list');
+                });
+            } else {
+                $(`<p class="no-comments">No comments</p>`).appendTo('.comments-list');
+            }
         }
     }); // END ajax request
 }

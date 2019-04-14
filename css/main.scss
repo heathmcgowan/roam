@@ -365,9 +365,6 @@ main {
 }
 
 .modal-top {
-    position: fixed;
-    top: 0;
-    left: 0;
     background-color: $primary-color;
     width: 100%;
     display: flex;
@@ -559,6 +556,13 @@ main {
     line-height: 0.2;
     align-self: flex-end;
     color: rgba(23, 19, 36, 0.5);
+}
+
+.no-comments {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 22px;
+    margin: 12px;
+    font-weight: $font-light;
 }
 
 .stats-container {
