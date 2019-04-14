@@ -1,5 +1,4 @@
 // Global Variables
-var numberInArray = 1;
 let headerHeight = $('header').height();
 let designerCardHeight = $('.designer-card').height();
 let triggerHeight = designerCardHeight + 75;
@@ -192,6 +191,8 @@ function openModal(clickedProject) {
         $('.modal-middle').empty();
         $('.modal-bottom-container').addClass('hidden');
         $('.comments-list').empty();
+        $('.designer-info-container').empty();
+        $('.project-info-container').empty();
         $('.project-modal').addClass('modal-closed');
         $('body').css('overflow', 'auto');
         $('html').css('overflow', 'auto');
@@ -223,18 +224,18 @@ function fillModal(clickedProject) {
             let designerCity = designer.city;
             let designerCountry = designer.country;
             let designerFollowers = designer.stats.followers;
-            let designerFollowing = designer.stats.following;
             let designerAppreciations = designer.stats.appreciations;
             let designerViews = designer.stats.views;
             let designerURL = designer.url;
             let projectTitle = project.name;
+            let projectImage = `${project.covers['202']}`;
             let projectDescription = project.description;
-            let projectDate = project.published_on;
+            let projectDate = convertTimestamp(project.published_on);
             let projectViews = project.stats.views;
             let projectAppreciations = project.stats.appreciations;
+            let projectComments = project.stats.comments;
             let projectTags = project.tags;
             let projectURL = project.url;
-            let projectTools = project.tools;
 
             // Fill top of modal with title, designer details, views, appreciations
             $(`<a class="modal-button view-on-behance pointer" href="${projectURL}" target="_blank">View on Behance <i class="fas fa-external-link-alt"></i></a>`).appendTo('.modal-top');
@@ -258,7 +259,48 @@ function fillModal(clickedProject) {
                 } else if (modules[i].type === 'embed') {
                     $(`${modules[i].embed}`).appendTo('.modal-middle');
                 }
-            }            
+            }
+
+            // Fill bottom of modal with details/stats
+            $(` <div class="designer-info-top">
+                    <div class="info-left">
+                        <a class="designer-link" href="${designerURL}" target="_blank"><img src="${designerImage}" alt="designer profile image" /></a>
+                    </div>
+                    <div class="info-right">
+                        <a class="designer-link" href="${designerURL}" target="_blank">${designerName}</a>
+                        <p class="designer-location">${designerCity}, ${designerCountry}</p>
+                        <div class="designer-stats">
+                            <span class="designer-appreciations"><i class="fas fa-thumbs-up"></i> ${designerAppreciations}</span>
+                            <span class="designer-views"><i class="fas fa-eye"></i> ${designerViews}</span>
+                            <span class="designer-followers"><i class="fas fa-user-friends"></i> ${designerFollowers}</span>
+                         </div>
+                    </div>
+                </div>`).appendTo('.designer-info-container');
+            
+            $(` <div class="project-info-top">
+                    <div class="info-left">
+                        <a class="designer-link" href="${projectURL}" target="_blank"><img src="${projectImage}" alt="project image" /></a>
+                    </div>
+                    <div class="info-right">
+                        <a class="designer-link" href="${projectURL}" target="_blank"><h4>${projectTitle}</h4></a>
+                        <p class="project-date">${projectDate}</p>
+                        <p>${projectDescription}</p>
+                        <div class="project-stats">
+                            <span class="project-appreciations"><i class="fas fa-thumbs-up"></i> ${projectAppreciations}</span>
+                            <span class="project-views"><i class="fas fa-eye"></i> ${projectViews}</span>
+                            <span class="project-comments"><i class="fas fa-comment"></i> ${projectComments}</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="project-tags">
+                </ul>`).appendTo('.project-info-container');
+
+            if (projectTags.length > 0) {
+                for (let i = 0; i < projectTags.length; i ++) {
+                    $(`<li class="project-tag"><a href="https://www.behance.net/search?search=${projectTags[i]}" target="_blank">${projectTags[i]}</a></li>`).appendTo('.project-tags');
+                }
+            }
+            
             // Remove pre-loader
             setTimeout(function() {
                 $('.modal-top').removeClass('hidden');

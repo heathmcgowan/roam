@@ -6,7 +6,7 @@ $font-regular: 400;
 $font-medium: 500;
 $font-semi-bold: 600;
 $font-bold: 700;
-$primary-color: rgb(23, 19, 36);
+$primary-color: #171324;
 
 
 // Mixins
@@ -483,7 +483,7 @@ main {
 .comments-container {
     width: 60%;
     padding: 20px 0;
-    margin-right: 20px;
+    margin-left: 20px;
     h4 {
         text-align: center;
         height: 35px;
@@ -520,7 +520,7 @@ main {
 .comment-right {
     background-color: #fff;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
@@ -565,16 +565,108 @@ main {
     font-weight: $font-light;
 }
 
-.stats-container {
+.info-container {
     width: 40%;
-    height: 400px;
+    min-height: 400px;
     margin-top: 55px;
+    font-weight: $font-regular;
+    .bold {
+        font-weight: $font-semi-bold;;
+    }
+}
+
+.project-info-container, .designer-info-container {
     background-color: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}    
+
+.project-info-top, .designer-info-top {
+    display: flex;
+    flex-direction: row;
+}
+
+.info-left {
+    margin: 5px 10px 0 5px;
+    img {
+        width: 100px;
+        border-radius: 7px;
+    }
+}
+
+.info-right {
+    flex: 1 1 auto;
+    padding-top: 8px;
+    h4 {
+        font-weight: $font-semi-bold;
+        font-size: 16px;
+        margin: 0 0 3px 0;
+    }
+    p {
+        font-size: 14px;
+        padding-bottom: 7px;
+    }
+}
+
+.designer-link {
+    color: $primary-color;
+    font-weight: $font-semi-bold;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.designer-link:hover {
+    text-decoration: underline;
+}
+
+.project-date, .designer-location {
+    font-weight: $font-semi-bold;
+    color: rgba(23, 19, 36, 0.5);
+}
+
+.project-stats, .designer-stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    span {
+        margin: 5px;
+    }
+}
+
+.designer-stats {
+    margin-top: 15px;
+}
+
+.project-tags {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.project-tag {
+    background-color: rgb(40, 37, 51);
+    color: #fff;
+    padding: 5px 10px;
+    margin: 0 5px 5px 5px;
+    transition: 0.15s ease background-color;
+    text-transform: uppercase;
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+}
+
+.project-tag:hover {
+    background-color: rgba(40, 37, 51, 0.8);
+    cursor: pointer;
 }
 
 // Footer
 footer {
-    height: 500px;
     background-color: $primary-color;
 }
 

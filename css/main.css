@@ -393,7 +393,7 @@ main {
 .comments-container {
   width: 60%;
   padding: 20px 0;
-  margin-right: 20px; }
+  margin-left: 20px; }
   .comments-container h4 {
     text-align: center;
     height: 35px;
@@ -424,7 +424,7 @@ main {
 .comment-right {
   background-color: #fff;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -464,14 +464,88 @@ main {
   margin: 12px;
   font-weight: 300; }
 
-.stats-container {
+.info-container {
   width: 40%;
-  height: 400px;
+  min-height: 400px;
   margin-top: 55px;
-  background-color: #fff; }
+  font-weight: 400; }
+  .info-container .bold {
+    font-weight: 600; }
+
+.project-info-container, .designer-info-container {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  margin-bottom: 20px; }
+
+.project-info-top, .designer-info-top {
+  display: flex;
+  flex-direction: row; }
+
+.info-left {
+  margin: 5px 10px 0 5px; }
+  .info-left img {
+    width: 100px;
+    border-radius: 7px; }
+
+.info-right {
+  flex: 1 1 auto;
+  padding-top: 8px; }
+  .info-right h4 {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 3px 0; }
+  .info-right p {
+    font-size: 14px;
+    padding-bottom: 7px; }
+
+.designer-link {
+  color: #171324;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 1.5; }
+
+.designer-link:hover {
+  text-decoration: underline; }
+
+.project-date, .designer-location {
+  font-weight: 600;
+  color: rgba(23, 19, 36, 0.5); }
+
+.project-stats, .designer-stats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  .project-stats span, .designer-stats span {
+    margin: 5px; }
+
+.designer-stats {
+  margin-top: 15px; }
+
+.project-tags {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  margin-top: 15px; }
+
+.project-tag {
+  background-color: #282533;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0 5px 5px 5px;
+  transition: 0.15s ease background-color;
+  text-transform: uppercase; }
+  .project-tag a {
+    text-decoration: none;
+    color: #fff; }
+
+.project-tag:hover {
+  background-color: rgba(40, 37, 51, 0.8);
+  cursor: pointer; }
 
 footer {
-  height: 500px;
   background-color: #171324; }
 
 .loader {
