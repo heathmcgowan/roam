@@ -1,7 +1,8 @@
 // Global Variables
 let headerHeight = $('header').height();
 let designerCardHeight = $('.designer-card').height();
-let triggerHeight = designerCardHeight + 75;
+let triggerHeight = designerCardHeight;
+let triggerOffset = 75;
 let modalOpen = false;
 const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV'; // backup - SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH
 let designer = [
@@ -78,8 +79,23 @@ function loadHero() {
 
 // Insert designer cards
 function loadDesigners() {
-    for (let i = 0; i < designer.length; i++) {  // TODO: change to handlebars
-        $('main').append(`<div class="designer-card dc${i}"><div class="designer-card-top"><div class="designer-details"><h3>${designer[i].name}</h3><h4>${designer[i].title}</h4><p>${designer[i].bio}</p><button class="projects-button pointer" data-index="${i}">View Projects</button></div><div class="designer-image"><img src="${designer[i].image}" alt="${designer[i].name}'s Profile Photo"></div></div><div class="designer-card-bottom projects-closed dcb${i}"><ul class="projects projects${i}"></ul></div></div>`);
+    for (let i = 0; i < designer.length; i++) {
+        $('main').append(`<div class="designer-card dc${i}">
+                            <div class="designer-card-top">
+                                <div class="designer-details">
+                                    <h3>${designer[i].name}</h3>
+                                    <h4>${designer[i].title}</h4>
+                                    <p>${designer[i].bio}</p>
+                                    <button class="projects-button pointer" data-index="${i}">View Projects</button>
+                                </div>
+                                <div class="designer-image">
+                                    <img src="${designer[i].image}" alt="${designer[i].name}'s Profile Photo">
+                                </div>
+                            </div>
+                            <div class="designer-card-bottom projects-closed dcb${i}">
+                                <ul class="projects projects${i}"></ul>
+                            </div>
+                        </div>`);
     }
     $('.projects-button').click(function(){
         let clickedDesigner = this.dataset.index;
@@ -108,7 +124,7 @@ function loadDesigners() {
 function onResize() {
     headerHeight = $('header').height();
     designerCardHeight = $('.designer-card').height();
-    triggerHeight = designerCardHeight + 75;
+    triggerHeight = designerCardHeight + triggerOffset;
 }
 
 $(window).on('resize', function () {
@@ -227,11 +243,11 @@ function fillModal(clickedProject) {
             // Fill top of modal with title, designer details, views, appreciations
             $('.view-on-behance').attr('href', projectURL);
             $(`<h1 class="project-title">${projectTitle}</h1>`).appendTo('.modal-top');
-            $(` <div class="description">
-                    <h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5>
-                    <p>${projectDescription}</p>
-                    <h5 class="appreciations">${projectAppreciations} <i class="fas fa-thumbs-up"></i></h5>
-                </div>`).appendTo('.modal-top');
+            $('.modal-top').append(`<div class="description">
+                                        <h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5>
+                                        <p>${projectDescription}</p>
+                                        <h5 class="appreciations">${projectAppreciations} <i class="fas fa-thumbs-up"></i></h5>
+                                    </div>`);
 
             // Fill middle of modal with project images and videos
             let modules = res.project.modules;
@@ -249,42 +265,41 @@ function fillModal(clickedProject) {
             }
 
             // Fill bottom of modal with details/stats
-            $(` <div class="designer-info-top">
-                    <div class="info-left">
-                        <a class="designer-link" href="${designerURL}" target="_blank"><img src="${designerImage}" alt="designer profile image" /></a>
-                    </div>
-                    <div class="info-right">
-                        <a class="designer-link" href="${designerURL}" target="_blank">${designerName}</a>
-                        <p class="designer-location">${designerCity}, ${designerCountry}</p>
-                        <div class="designer-stats">
-                            <span class="designer-appreciations"><i class="fas fa-thumbs-up"></i> ${designerAppreciations}</span>
-                            <span class="designer-views"><i class="fas fa-eye"></i> ${designerViews}</span>
-                            <span class="designer-followers"><i class="fas fa-user-friends"></i> ${designerFollowers}</span>
-                         </div>
-                    </div>
-                </div>`).appendTo('.designer-info-container');
-            
-            $(` <div class="project-info-top">
-                    <div class="info-left">
-                        <a class="designer-link" href="${projectURL}" target="_blank"><img src="${projectImage}" alt="project image" /></a>
-                    </div>
-                    <div class="info-right">
-                        <a class="designer-link" href="${projectURL}" target="_blank"><h4>${projectTitle}</h4></a>
-                        <p class="project-date">${projectDate}</p>
-                        <p>${projectDescription}</p>
-                        <div class="project-stats">
-                            <span class="project-appreciations"><i class="fas fa-thumbs-up"></i> ${projectAppreciations}</span>
-                            <span class="project-views"><i class="fas fa-eye"></i> ${projectViews}</span>
-                            <span class="project-comments"><i class="fas fa-comment"></i> ${projectComments}</span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="project-tags">
-                </ul>`).appendTo('.project-info-container');
+            $('.designer-info-container').append(`  <div class="designer-info-top">
+                                                        <div class="info-left">
+                                                            <a class="designer-link" href="${designerURL}" target="_blank"><img src="${designerImage}" alt="designer profile image" /></a>
+                                                        </div>
+                                                        <div class="info-right">
+                                                            <a class="designer-link" href="${designerURL}" target="_blank">${designerName}</a>
+                                                            <p class="designer-location">${designerCity}, ${designerCountry}</p>
+                                                            <div class="designer-stats">
+                                                                <span class="designer-appreciations"><i class="fas fa-thumbs-up"></i> ${designerAppreciations}</span>
+                                                                <span class="designer-views"><i class="fas fa-eye"></i> ${designerViews}</span>
+                                                                <span class="designer-followers"><i class="fas fa-user-friends"></i> ${designerFollowers}</span>
+                                                                </div>
+                                                        </div>
+                                                    </div>`);
+            $('.project-info-container').append(`   <div class="project-info-top">
+                                                        <div class="info-left">
+                                                            <a class="designer-link" href="${projectURL}" target="_blank"><img src="${projectImage}" alt="project image" /></a>
+                                                        </div>
+                                                        <div class="info-right">
+                                                            <a class="designer-link" href="${projectURL}" target="_blank"><h4>${projectTitle}</h4></a>
+                                                            <p class="project-date">${projectDate}</p>
+                                                            <p>${projectDescription}</p>
+                                                            <div class="project-stats">
+                                                                <span class="project-appreciations"><i class="fas fa-thumbs-up"></i> ${projectAppreciations}</span>
+                                                                <span class="project-views"><i class="fas fa-eye"></i> ${projectViews}</span>
+                                                                <span class="project-comments"><i class="fas fa-comment"></i> ${projectComments}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="project-tags">
+                                                    </ul>`);
 
             if (projectTags.length > 0) {
                 for (let i = 0; i < projectTags.length; i ++) {
-                    $(`<li class="project-tag"><a href="https://www.behance.net/search?search=${projectTags[i]}" target="_blank">${projectTags[i]}</a></li>`).appendTo('.project-tags');
+                    $('.project-tags').append(`<li class="project-tag"><a href="https://www.behance.net/search?search=${projectTags[i]}" target="_blank">${projectTags[i]}</a></li>`);
                 }
             }
             
@@ -309,19 +324,19 @@ function fillModal(clickedProject) {
             if (comment.length > 0) {
                 comment.forEach(function(comment) {
                     let elapsedTime = convertTimestamp(comment.created_on);
-                    $(` <div class="comment">
-                            <div class="comment-left">
-                                <img src="${comment.user.images['115']}" alt="${comment.user.display_name}'s profile image" />
-                            </div>
-                            <div class="comment-right">
-                                <a class="comment-user" href="${comment.user.url}" target="_blank">${comment.user.display_name}</a>
-                                <p class="comment-content">${comment.comment}</p>
-                                <p class="comment-date">${elapsedTime}</p>
-                            </div>
-                        </div>`).appendTo('.comments-list');
+                    $('.comments-list').append(`<div class="comment">
+                                                    <div class="comment-left">
+                                                        <img src="${comment.user.images['115']}" alt="${comment.user.display_name}'s profile image" />
+                                                    </div>
+                                                    <div class="comment-right">
+                                                        <a class="comment-user" href="${comment.user.url}" target="_blank">${comment.user.display_name}</a>
+                                                        <p class="comment-content">${comment.comment}</p>
+                                                        <p class="comment-date">${elapsedTime}</p>
+                                                    </div>
+                                                </div>`);
                 });
             } else {
-                $(`<p class="no-comments">No comments</p>`).appendTo('.comments-list');
+                $('.comments-list').append(`<p class="no-comments">No comments</p>`);
             }
         }
     }); // END ajax request
