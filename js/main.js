@@ -190,6 +190,7 @@ function openModal(clickedProject) {
         $('.modal-top').addClass('hidden');
         $('.modal-middle').empty();
         $('.modal-bottom-container').addClass('hidden');
+        $('.modal-footer').addClass('hidden');
         $('.comments-list').empty();
         $('.designer-info-container').empty();
         $('.project-info-container').empty();
@@ -199,6 +200,7 @@ function openModal(clickedProject) {
     });
     $('.project-modal').removeClass('modal-closed');
     $('.modal-bottom-container').removeClass('hidden');
+    $('.modal-footer').removeClass('hidden');
     $('body').css('overflow', 'hidden');
     $('html').css('overflow', 'hidden');
     fillModal(clickedProject);
