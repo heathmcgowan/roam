@@ -183,21 +183,6 @@ function loadProjects(i, behanceUser) {
 
 // Behance API - Open clicked project
 function openModal(clickedProject) {
-    $('<button class="close-modal modal-button pointer"><i class="fas fa-chevron-left"></i> Back</button>').appendTo('.modal-top');
-    $('.close-modal').click(function() {
-        modalOpen = false;
-        $('.modal-top').empty();
-        $('.modal-top').addClass('hidden');
-        $('.modal-middle').empty();
-        $('.modal-bottom-container').addClass('hidden');
-        $('.modal-footer').addClass('hidden');
-        $('.comments-list').empty();
-        $('.designer-info-container').empty();
-        $('.project-info-container').empty();
-        $('.project-modal').addClass('modal-closed');
-        $('body').css('overflow', 'auto');
-        $('html').css('overflow', 'auto');
-    });
     $('.project-modal').removeClass('modal-closed');
     $('.modal-bottom-container').removeClass('hidden');
     $('.modal-footer').removeClass('hidden');
@@ -240,7 +225,7 @@ function fillModal(clickedProject) {
             let projectURL = project.url;
 
             // Fill top of modal with title, designer details, views, appreciations
-            $(`<a class="modal-button view-on-behance pointer" href="${projectURL}" target="_blank">View on Behance <i class="fas fa-external-link-alt"></i></a>`).appendTo('.modal-top');
+            $('.view-on-behance').attr('href', projectURL);
             $(`<h1 class="project-title">${projectTitle}</h1>`).appendTo('.modal-top');
             $(` <div class="description">
                     <h5 class="views"><i class="fas fa-eye"></i> ${projectViews}</h5>
@@ -305,6 +290,7 @@ function fillModal(clickedProject) {
             
             // Remove pre-loader
             setTimeout(function() {
+                $('.modal-nav').removeClass('hidden');
                 $('.modal-top').removeClass('hidden');
                 $('.modal-pre-loader').detach();
             }, 2200);
@@ -340,6 +326,23 @@ function fillModal(clickedProject) {
         }
     }); // END ajax request
 }
+
+// Close modal 
+$('.close-modal').click(function() {
+    modalOpen = false;
+    $('.modal-nav').addClass('hidden');
+    $('.modal-top').empty();
+    $('.modal-top').addClass('hidden');
+    $('.modal-middle').empty();
+    $('.modal-bottom-container').addClass('hidden');
+    $('.modal-footer').addClass('hidden');
+    $('.comments-list').empty();
+    $('.designer-info-container').empty();
+    $('.project-info-container').empty();
+    $('.project-modal').addClass('modal-closed');
+    $('body').css('overflow', 'auto');
+    $('html').css('overflow', 'auto');
+});
 
 // Convert timestamp to elapsed time
 function convertTimestamp(timestamp) {
