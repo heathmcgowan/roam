@@ -9,28 +9,28 @@ let designer = [
     {
         name: 'Hamish Cooper',
         title: 'Graphic Designer',
-        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        bio: 'Hamish is our head graphic designer. Having been with Roam since 2014, he has a wealth of experience under his belt, producing only the best results for our clients.<br /><br />When Hamish isn\'t in the office, he loves to go hiking and explore the great outdoors, capturing some great shots on his DSLR in the process.',
         image: 'img/designer04.jpg',
         userID: 'hamishcooper'
     },
     {   
         name: 'Lena Plaksina',
         title: 'Web Designer',
-        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        bio: 'Lena is a master of all things web design. Working closely with our other designers, Lena creates cutting edge web sites which are certain to make your brand stand out from the rest.<br /><br />Lena is a self-professed film nerd, spending her free time hosting movie marathons for all her friends.',
         image: 'img/designer01.jpg',
         userID: 'LenaPlaksina'
     },
     {
         name: 'Ata Hutchinson',
         title: 'UX Designer',
-        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        bio: 'Having been with us since the beginning, Ata is a massive influence in all areas of our design team. He focuses mainly on UX design and the results speak for themselves, leaving our clients grinning from ear to ear.<br /><br />Ata is also a talented musician in his spare time. Playing 4 different instruments, he\'s a one man band!',
         image: 'img/designer02.jpg',
         userID: 'tunatipangcf7d'
     },
     {
         name: 'Hannah Jensen',
         title: 'Interaction Designer',
-        bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur ex quasi, eveniet facere aut. Placeat minima rerum debitis eaque neque mollitia quia facere laudantium numquam? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus illum suscipit dolore minima consequatur.',
+        bio: 'Hannah is the office clown, but don\'t let that fool you, her interaction design skills are second to none.<br /><br />When she\'s not hard at work, she can usually be found at the beach during Summer, or dreaming about the beach during Winter.',
         image: 'img/designer03.jpg',
         userID: 'hannahcoolcatjensen'
     },
