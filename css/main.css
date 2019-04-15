@@ -356,7 +356,8 @@ main {
   background-color: #fff; }
 
 .view-on-behance {
-  margin-right: 30px; }
+  margin-right: 30px;
+  padding-top: 7px; }
 
 .modal-middle {
   width: 100%;

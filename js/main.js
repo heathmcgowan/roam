@@ -142,7 +142,6 @@ $(window).scroll(function () {
         $('.background-triangle').removeClass('hidden-opacity');
         $('.scroll-hero').removeClass('hidden-opacity');
     }
-    // TODO: Update loop with array details
     for (let i = 0; i < designer.length; i++) {
         if ($(this).scrollTop() > ((headerHeight / 2) + triggerHeight * i)) {
             $(`.dc${i}`).addClass('on-screen');
