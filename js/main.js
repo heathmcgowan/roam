@@ -4,7 +4,7 @@ let designerCardHeight = $('.designer-card').height();
 let triggerHeight = designerCardHeight;
 let triggerOffset = 75;
 let modalOpen = false;
-const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV'; // backup - SCJnOBwjJqgpwxIybOHvs0cUt0XRrydH
+const behanceKey = '40CPyv6Gz9Kny0Hl2vwjYBhbGM2zdplV';
 let designer = [
     {
         name: 'Hamish Cooper',
@@ -54,12 +54,12 @@ function removeLoader() {
     }, 100);
     setTimeout(function() {
         $('.loader').addClass('hidden-opacity');
-    }, 1500); // TODO: Change back to 1500
+    }, 1500);
     setTimeout(function() {
         $('.loader').addClass('hidden');
         loadHero();
         loadDesigners();
-    }, 2000); // TODO: Change back to 2000
+    }, 2000);
 }
 
 // Show hero content
@@ -158,12 +158,11 @@ function loadProjects(i, behanceUser) {
         url: urlProjects,
         dataType: 'jsonp',
         // Ajax request loading
-        beforeSend: function(res) { // eslint-disable-line
+        beforeSend: function(res) { 
             $('<div class="pre-loader"><object type="image/svg+xml" data="img/loader.svg"></object></div>').prependTo(`ul.projects${i}`);
         },
         // Ajax request complete
-        success: function(res) { // eslint-disable-line
-            console.log(res); // eslint-disable-line
+        success: function(res) { 
             setTimeout(function() {
                 $('.pre-loader').detach();
                 $('.projects').empty();
@@ -213,12 +212,11 @@ function fillModal(clickedProject) {
         url: urlProjects,
         dataType: 'jsonp',
         // Ajax request loading
-        beforeSend: function(res) { // eslint-disable-line
+        beforeSend: function(res) {
             $('<div class="modal-pre-loader"><object class="loader-svg" type="image/svg+xml" data="img/loader.svg"></object></div>').appendTo('.project-modal');
         },
         // Ajax request complete
-        success: function(res) { // eslint-disable-line
-            console.log(res); // eslint-disable-line
+        success: function(res) { 
             let designer = res.project.owners[0];
             let project = res.project;
             let designerName = designer.display_name;
@@ -315,10 +313,8 @@ function fillModal(clickedProject) {
     $.ajax({
         url: urlProjectsComments,
         dataType: 'jsonp',
-
         // Ajax request complete
-        success: function(res) { // eslint-disable-line
-            console.log(res); // eslint-disable-line
+        success: function(res) { 
             let comment = res.comments;
             if (comment.length > 0) {
                 comment.forEach(function(comment) {

@@ -41,11 +41,7 @@ nav {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  position: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center; }
+  transform: translate(-50%, -50%); }
 
 .hero-heading {
   color: #171324;
@@ -562,7 +558,6 @@ footer {
   background-color: #171324;
   padding: 0px 20px;
   color: #fff;
-  clear: after;
   overflow: hidden; }
 
 .footer-content {
@@ -807,6 +802,14 @@ footer {
     display: none; }
   .description h5 {
     width: 50%; } }
+
+@media only screen and (max-height: 660px) {
+  .hero {
+    height: 100%;
+    width: 100%;
+    font-size: 80px; }
+  #team-illustration {
+    width: 80%; } }
 
 .hidden {
   display: none; }

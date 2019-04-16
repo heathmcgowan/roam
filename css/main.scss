@@ -72,10 +72,6 @@ nav {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    position: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
 }
 
 .hero-heading {
@@ -326,7 +322,7 @@ main {
         font-weight: $font-light;
         padding: 30px 80px;
     }
-    button { // TODO: button hover color as per Roam style
+    button {
         padding: 5px 8px;
         color: #fff;
         background-color: $primary-color;
@@ -684,7 +680,6 @@ footer {
     background-color: $primary-color;
     padding: 0px 20px;
     color: #fff;
-    clear: after;
     overflow: hidden;
 }
 
@@ -852,7 +847,7 @@ footer {
             font-size: 14px;
             padding: 20px 30px;
         }
-        button { // TODO: button hover color as per Roam style
+        button { 
             font-size: 20px;
         }
     }
@@ -1025,6 +1020,18 @@ footer {
     }
     .description h5 {
         width: 50%;
+    }
+}
+
+@media only screen and (max-height: 660px) {
+    .hero {
+        height: 100%;
+        width: 100%;
+        font-size: 80px;
+    }
+    
+    #team-illustration {
+        width: 80%;
     }
 }
 
